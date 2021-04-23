@@ -1,0 +1,7 @@
+## Translated by:
+
+Specs:=
+Specs unavailable=
+name: @1=
+ID: @1=
+Damge to @1 type:
