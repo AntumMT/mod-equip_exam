@@ -2,6 +2,8 @@
 local node_def = {
 	drawtype = "normal",
 	tiles = {
+		"equip_exam_examiner.png",
+		"equip_exam_examiner.png",
 		"equip_exam_examiner_front.png",
 		"equip_exam_examiner.png",
 	},
