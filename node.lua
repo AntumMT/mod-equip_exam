@@ -24,6 +24,7 @@ local node_def = {
 		local inv = meta:get_inventory()
 		return inv:is_empty("input")
 	end,
+	-- FIXME: both are called when item is replaced with another
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		equip_exam:show_formspec(pos, player)
 	end,

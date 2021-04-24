@@ -2,6 +2,7 @@
 
 Specs:=
 Specs unavailable=
-name: @1=
+Name: @1=
 ID: @1=
-Damge to @1 type: @2=
+Attack: @1
+Defense: @1

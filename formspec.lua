@@ -15,17 +15,34 @@ local function get_item_specs(item)
 	if not name then
 		specs = S("ID: @1", id)
 	else
-		specs = S("name: @1", name) .. "," .. S("ID: @1", id)
+		specs = S("Name: @1", name) .. "," .. S("ID: @1", id)
 	end
 
-	if item.tool_capabilities.damage_groups then
-		for k, v in pairs(item.tool_capabilities.damage_groups) do
-			if not specs or specs == "" then
-				specs = k .. ": " .. v
-			else
-				specs = specs .. "," .. S("Damge to @1 type: @2", k, v)
+	local tool_capabilities = item.tool_capabilities
+	local armor_groups = item.armor_groups
+
+	-- is a tool
+	if tool_capabilities then
+		if tool_capabilities.damage_groups and tool_capabilities.damage_groups.fleshy then
+			specs = specs .. "," .. S("Attack: @1", tool_capabilities.damage_groups.fleshy)
+		end
+
+		--[[
+		if tool_capabilities.groupcaps then
+			specs = specs .. "," .. S("Group caps:")
+			for k, v in pairs(tool_capabilities.groupcaps) do
+				specs = specs .. ",    " .. k .. ":"
+				for ck, cv in pairs(v) do
+					if type(cv) ~= "table" then
+						specs = specs .. " " .. ck .. "=" .. cv
+					end
+				end
 			end
 		end
+		]]
+	-- is armor
+	elseif armor_groups and armor_groups.fleshy then
+		specs = specs .. "," .. S("Defense: @1", armor_groups.fleshy)
 	end
 
 	return specs
