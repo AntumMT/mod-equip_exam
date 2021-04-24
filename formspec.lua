@@ -1,7 +1,7 @@
 
 local S = core.get_translator("equip_exam")
 
-equip_exam.formspec_name = "equipExam"
+equip_exam.formspec_name = "equip_exam"
 
 
 local function get_item_specs(item)
@@ -31,6 +31,12 @@ local function get_item_specs(item)
 	return specs
 end
 
+
+--- Retrieves formspec string.
+--
+--  @function equip_exam:get_formspec
+--  @param item The item name string.
+--  @param empty If *true*, no stats information will be printed.
 function equip_exam:get_formspec(item, empty)
 	local specs
 	if not empty then
@@ -54,6 +60,12 @@ function equip_exam:get_formspec(item, empty)
 	return formspec
 end
 
+
+--- Displays the formspec to a player.
+--
+--  @function equip_exam:show_formspec
+--  @param pos The coordinates where the node is located.
+--  @param player Player object to whom formspec will be displayed.
 function equip_exam:show_formspec(pos, player)
 	local playername = player:get_player_name()
 	if not playername or not player:is_player() then return end
