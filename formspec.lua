@@ -27,19 +27,26 @@ local function get_item_specs(item)
 			specs = specs .. "," .. S("Attack: @1", tool_capabilities.damage_groups.fleshy)
 		end
 
-		--[[
 		if tool_capabilities.groupcaps then
-			specs = specs .. "," .. S("Group caps:")
-			for k, v in pairs(tool_capabilities.groupcaps) do
-				specs = specs .. ",    " .. k .. ":"
-				for ck, cv in pairs(v) do
-					if type(cv) ~= "table" then
-						specs = specs .. " " .. ck .. "=" .. cv
-					end
-				end
+			local cracky = tool_capabilities.groupcaps.cracky -- mining/pick axe
+			local choppy = tool_capabilities.groupcaps.choppy -- cutting/axe
+			local crumbly = tool_capabilities.groupcaps.crumbly -- digging/shovel
+			local snappy = tool_capabilities.groupcaps.snappy -- ???/sword
+
+			if cracky and cracky.maxlevel then
+				specs = specs .. "," .. S("Mine level: @1", cracky.maxlevel)
+			end
+			if choppy and choppy.maxlevel then
+				specs = specs .. "," .. S("Chop level: @1", choppy.maxlevel)
+			end
+			if crumbly and crumbly.maxlevel then
+				specs = specs .. "," .. S("Dig level: @1", crumbly.maxlevel)
+			end
+			if snappy and snappy.maxlevel then
+				specs = specs .. "," .. S("Snap level: @1", snappy.maxlevel)
 			end
 		end
-		]]
+
 	-- is armor
 	elseif armor_groups and armor_groups.fleshy then
 		specs = specs .. "," .. S("Defense: @1", armor_groups.fleshy)
@@ -69,7 +76,7 @@ function equip_exam:get_formspec(item, empty)
 	local formspec = "formspec_version[4]"
 		.. "size[12,9]"
 		.. "list[context;input;1,1;1,1;0]"
-		.. "button_exit[0.25,3.1;2.5,0.8;close;Close]"
+		.. "button_exit[0.25,3.1;2.5,0.8;close;" .. S("Close") .. "]"
 		.. "label[3,0.7;" .. S("Specs:") .. "]"
 		.. "textlist[3,1;8,3;speclist;" .. specs .. ";1;false]"
 		.. "list[current_player;main;1.15,4.1;8,4;0]"
