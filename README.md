@@ -10,4 +10,5 @@ Tool to examine item stats in Minetest.
 
 ### Licensing:
 
-- [MIT](LICENSE.txt)
+- Code: [MIT](LICENSE.txt)
+- Textures: CC0
