@@ -1,2 +1,3 @@
 
 - place item back in inventory when formspec is closed
+- add craft recipe
