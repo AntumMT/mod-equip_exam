@@ -12,4 +12,6 @@ Tool to examine item stats in [Minetest](https://www.minetest.net/).
 - Textures: [CC0](textures//sources.txt)
 
 ### Links:
+
 - [Changelog](CHANGES.txt)
+- [TODO](TODO.txt)
