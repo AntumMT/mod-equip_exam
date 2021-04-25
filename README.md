@@ -2,13 +2,11 @@
 
 ### Description:
 
-Tool to examine item stats in Minetest.
-
-***WARNING:** this mod is in development & not ready for live use*
+Tool to examine item stats in [Minetest](https://www.minetest.net/).
 
 ![screenshot](screenshot.png)
 
 ### Licensing:
 
 - Code: [MIT](LICENSE.txt)
-- Textures: CC0
+- Textures: [CC0](textures//sources.txt)
