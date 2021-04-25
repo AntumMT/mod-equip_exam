@@ -9,3 +9,4 @@
   - chop (choppy)
   - dig (crumbly)
   - snap (snappy)
+- Added craft recipe (requires default & optionally basic_materials)

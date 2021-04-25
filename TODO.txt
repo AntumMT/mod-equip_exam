@@ -1,4 +1,3 @@
 
 - place item back in inventory when formspec is closed
-- add craft recipe
 - display text when targeting node

@@ -6,6 +6,7 @@ equip_exam.path = core.get_modpath(equip_exam.name)
 local files = {
 	"formspec",
 	"node",
+	"crafting",
 }
 
 for _, f in pairs(files) do
