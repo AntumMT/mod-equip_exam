@@ -26,6 +26,7 @@ Tool to examine item stats in [Minetest](https://www.minetest.net/).
 Key:
 - d:s = default:steel_ingot (wrought iron ingot)
 - d:b = default:bronze_ingot (bronze ingot)
+- d:o = default:obsidianbrick (obsidian brick)
 - b:i = basic_materials:ic (simple integrated circuit)
 
 <blockquote>
@@ -35,7 +36,7 @@ Without `basic_materials`:
 ┌─────┬─────┬─────┐
 │ d:s │ d:b │ d:s │
 ├─────┼─────┼─────┤
-│ d:b │ d:s │ d:b │
+│ d:b │ d:o │ d:b │
 ├─────┼─────┼─────┤
 │ d:s │ d:b │ d:s │
 └─────┴─────┴─────┘
