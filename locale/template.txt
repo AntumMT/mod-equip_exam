@@ -1,5 +1,6 @@
 ## Translated by:
 
+Equipment Examiner=
 Specs:=
 Specs unavailable=
 Close=

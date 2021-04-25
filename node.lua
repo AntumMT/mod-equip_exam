@@ -1,5 +1,10 @@
 
+local S = core.get_translator(equip_exam.name)
+
+
 local node_def = {
+	description = S("Equipment Examiner"),
+	short_description = S("Equipment Examiner"),
 	drawtype = "normal",
 	tiles = {
 		"equip_exam_examiner.png",
