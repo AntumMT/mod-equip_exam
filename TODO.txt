@@ -1,3 +1,2 @@
 
 - place item back in inventory when formspec is closed
-- display text when targeting node

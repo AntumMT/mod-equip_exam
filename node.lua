@@ -2,9 +2,11 @@
 local S = core.get_translator(equip_exam.name)
 
 
+local common_name = S("Equipment Examiner")
+
 local node_def = {
-	description = S("Equipment Examiner"),
-	short_description = S("Equipment Examiner"),
+	description = common_name,
+	short_description = common_name,
 	drawtype = "normal",
 	tiles = {
 		"equip_exam_examiner.png",
@@ -17,6 +19,7 @@ local node_def = {
 	stack_max = 1,
 	on_construct = function(pos)
 		local meta = core.get_meta(pos)
+		meta:set_string("infotext", common_name)
 		meta:set_string("formspec", equip_exam:get_formspec())
 		local inv = meta:get_inventory()
 		inv:set_size("input", 1)
