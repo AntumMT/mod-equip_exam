@@ -23,6 +23,7 @@ Tool to examine item stats in [Minetest](https://www.minetest.net/).
 
 <details>
 <summary>Spoiler:</summary>
+
 Key:
 - d:s = default:steel_ingot (wrought iron ingot)
 - d:b = default:bronze_ingot (bronze ingot)
