@@ -1,7 +1,5 @@
 
-local S = core.get_translator("equip_exam")
-
-equip_exam.formspec_name = "equip_exam"
+local S = core.get_translator(equip_exam.name)
 
 
 local function get_item_specs(item)
@@ -98,5 +96,5 @@ function equip_exam:show_formspec(pos, player)
 	local inv = meta:get_inventory()
 	local contents = inv:get_list("input")[1]
 
-	core.show_formspec(playername, equip_exam.formspec_name, equip_exam:get_formspec(contents:get_name(), inv:is_empty("input")))
+	core.show_formspec(playername, equip_exam.name, equip_exam:get_formspec(contents:get_name(), inv:is_empty("input")))
 end
