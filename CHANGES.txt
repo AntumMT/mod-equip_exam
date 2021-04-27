@@ -1,5 +1,8 @@
 
 1.0
+- Fixed front texture position.
+
+1.0
 - Created equipment examiner node & formspec.
 - Reads common name & technical name.
 - Reads ability levels:
