@@ -23,7 +23,7 @@ local armor_types = {
 	["armor_feet"] = "feet def.",
 	["armor_shield"] = "shield def.",
 	["armor_use"] = "durability",
-	["armor_heal"] = "healing:",
+	["armor_heal"] = "healing",
 	["armor_radiation"] = "radiation",
 }
 
