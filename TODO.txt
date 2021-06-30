@@ -1,3 +1,10 @@
 
 TODO:
 - place item back in inventory when formspec is closed
+- add healing value for foods
+- add slingshot support
+- formspec escape descriptions (Name)
+- check if item is node before setting "choppy", "snappy", etc.
+- show item "type"
+- use infinity symbol if "uses" is 0 (unlimited)
+- suppore wlight
