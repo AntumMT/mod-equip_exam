@@ -58,7 +58,7 @@ With `basic_materials`:
 
 ### Links:
 
-- [![ContentDB](https://content.minetest.net/packages/AntumDeluge/equip_exam/shields/title/)](https://content.minetest.net/packages/AntumDeluge/equip_exam/)
+- [![ContentDB](https://img.shields.io/static/v1?label=ContentDB&message=equip_exam&color=%23375a7f&logo=minetest)](https://content.minetest.net/packages/AntumDeluge/equip_exam/)
 - [Forum](https://forum.minetest.net/viewtopic.php?t=26618)
 - [Git repo](https://github.com/AntumMT/mod-equip_exam)
 - [Changelog](changelog.txt)
