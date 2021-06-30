@@ -1,4 +1,8 @@
 
+v1.3
+----
+- collects all specs from `item.groups`, `item.tool_capabilities`, & `item.armor_groups`
+
 v1.2
 ----
 - any item can be examined

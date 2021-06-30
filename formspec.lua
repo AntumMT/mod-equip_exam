@@ -2,55 +2,165 @@
 local S = core.get_translator(equip_exam.name)
 
 
+local tool_types = {
+	["cracky"] = "mine level",
+	["choppy"] = "chop level",
+	["crumbly"] = "dig level",
+	["snappy"] = "snap level",
+}
+
+local weapon_types = {
+	["fleshy"] = "attack",
+	["uses"] = "durability",
+	["punch_attack_uses"] = "durability",
+}
+
+local armor_types = {
+	["fleshy"] = "defense",
+	["armor_head"] = "head def.",
+	["armor_torso"] = "torso def.",
+	["armor_legs"] = "legs def.",
+	["armor_feet"] = "feet def.",
+	["armor_shield"] = "shield def.",
+	["armor_use"] = "durability",
+	["armor_heal"] = "healing:",
+	["armor_radiation"] = "radiation",
+}
+
+local other_types = {
+	["flammable"] = "flammability",
+	["full_punch_interval"] = "speed interval",
+}
+
 local function get_item_specs(item)
 	if not item then return nil end
 
-	local specs = nil
+	local specs = {}
 	local name = item.short_description
 	if not name then name = item.description end
 	local id = item.name
 
 	if not name then
-		specs = S("ID: @1", id)
+		table.insert(specs, S("ID: @1", id))
 	else
-		specs = S("Name: @1", name) .. "," .. S("ID: @1", id)
+		table.insert(specs, S("Name: @1", name))
+		table.insert(specs, S("ID: @1", id))
 	end
 
-	local tool_capabilities = item.tool_capabilities
-	local armor_groups = item.armor_groups
+	local groups = item.groups or {}
+	local tool_capabilities = item.tool_capabilities or {}
+	tool_capabilities.damage_groups = tool_capabilities.damage_groups or {}
+	tool_capabilities.groupcaps = tool_capabilities.groupcaps or {}
+	local armor_groups = item.armor_groups or {}
 
-	-- is a tool
-	if tool_capabilities then
-		if tool_capabilities.damage_groups and tool_capabilities.damage_groups.fleshy then
-			specs = specs .. "," .. S("Attack: @1", tool_capabilities.damage_groups.fleshy)
-		end
+	local specs_tool = {}
+	local specs_weapon = {}
+	local specs_armor = {}
+	local specs_other = {}
 
-		if tool_capabilities.groupcaps then
-			local cracky = tool_capabilities.groupcaps.cracky -- mining/pick axe
-			local choppy = tool_capabilities.groupcaps.choppy -- cutting/axe
-			local crumbly = tool_capabilities.groupcaps.crumbly -- digging/shovel
-			local snappy = tool_capabilities.groupcaps.snappy -- ???/sword
-
-			if cracky and cracky.maxlevel then
-				specs = specs .. "," .. S("Mine level: @1", cracky.maxlevel)
-			end
-			if choppy and choppy.maxlevel then
-				specs = specs .. "," .. S("Chop level: @1", choppy.maxlevel)
-			end
-			if crumbly and crumbly.maxlevel then
-				specs = specs .. "," .. S("Dig level: @1", crumbly.maxlevel)
-			end
-			if snappy and snappy.maxlevel then
-				specs = specs .. "," .. S("Snap level: @1", snappy.maxlevel)
+	for k, v in pairs(tool_capabilities) do
+		if type(v) ~= "table" then
+			if tool_types[k] then
+				table.insert(specs_tool, S(tool_types[k] .. ": @1", v))
+			elseif weapon_types[k] then
+				table.insert(specs_other, S(weapon_types[k] .. ": @1", v))
+			elseif armor_types[k] then
+				table.insert(specs_other, S(armor_types[k] .. ": @1", v))
+			elseif other_types[k] then
+				table.insert(specs_other, S(other_types[k] .. ": @1", v))
+			else
+				table.insert(specs_other, k .. ": " .. v)
 			end
 		end
-
-	-- is armor
-	elseif armor_groups and armor_groups.fleshy then
-		specs = specs .. "," .. S("Defense: @1", armor_groups.fleshy)
 	end
 
-	return specs
+	for k, v in pairs(tool_capabilities.groupcaps) do
+		if type(v) ~= "table" then
+			table.insert(specs_other, k .. ": " .. v)
+		else
+			if v.maxlevel then
+				if tool_types[k] then
+					table.insert(specs_tool, S(tool_types[k] .. ": @1", v.maxlevel))
+					if v.uses then
+						table.insert(specs_tool, S("durability: @1", v.uses))
+					end
+				elseif other_types[k] then
+					table.insert(specs_other, S(other_types[k] .. ": @1", v.maxlevel))
+					if v.uses then
+						table.insert(specs_other, S("durability: @1", v.uses))
+					end
+				else
+					table.insert(specs_other, k .. ": " .. v.maxelevel)
+					if v.uses then
+						table.insert(specs_other, S("durability: @1", v.uses))
+					end
+				end
+			end
+		end
+	end
+
+	for k, v in pairs(tool_capabilities.damage_groups) do
+		if weapon_types[k] then
+			table.insert(specs_weapon, S(weapon_types[k] .. ": @1", v))
+		elseif other_types[k] then
+			table.insert(specs_other, S(other_types[k] .. ": @1", v))
+		else
+			table.insert(specs_other, k .. ": " .. v)
+		end
+	end
+
+	for k, v in pairs(armor_groups) do
+		if armor_types[k] then
+			table.insert(specs_armor, S(armor_types[k] .. ": @1", v))
+		elseif other_types[k] then
+			table.insert(specs_other, S(other_types[k] .. ": @1", v))
+		else
+			table.insert(specs_other, k .. ": " .. v)
+		end
+	end
+
+	for k, v in pairs(groups) do
+		if tool_types[k] then
+			table.insert(specs_tool, S(tool_types[k] .. ": @1", v))
+		elseif weapon_types[k] then
+			table.insert(specs_weapon, S(weapon_types[k] .. ": @1", v))
+		elseif armor_types[k] then
+			table.insert(specs_armor, S(armor_types[k] .. ": @1", v))
+		elseif other_types[k] then
+			table.insert(specs_other, S(other_types[k] .. ": @1", v))
+		else
+			table.insert(specs_other, k .. ": " .. v)
+		end
+	end
+
+	if #specs_tool > 0 then
+		table.insert(specs, S("Tool:"))
+		for _, sp in ipairs(specs_tool) do
+			table.insert(specs, "  " .. sp)
+		end
+	end
+	if #specs_weapon > 0 then
+		table.insert(specs, S("Weapon:"))
+		for _, sp in ipairs(specs_weapon) do
+			table.insert(specs, "  " .. sp)
+		end
+	end
+	if #specs_armor > 0 then
+		table.insert(specs, S("Armor:"))
+		for _, sp in ipairs(specs_armor) do
+			table.insert(specs, "  " .. sp)
+		end
+	end
+	if #specs_other > 0 then
+		table.insert(specs, S("Other:"))
+		for _, sp in ipairs(specs_other) do
+			table.insert(specs, "  " .. sp)
+		end
+	end
+
+	if not specs then return end
+
+	return table.concat(specs, ",")
 end
 
 
