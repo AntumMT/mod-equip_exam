@@ -30,6 +30,8 @@ local armor_types = {
 local other_types = {
 	["flammable"] = "flammability",
 	["full_punch_interval"] = "speed interval",
+	["fall_damage_add_percent"] = "fall damage",
+	["oddly_breakable_by_hand"] = "hand breakable",
 }
 
 local function format_spec(grp, name, value, technical)

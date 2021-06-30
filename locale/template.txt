@@ -37,3 +37,5 @@ radiation: @1=
 Other:=
 flammability: @1=
 speed interval: @1=
+fall damage: @1=
+hand breakable: @1=
