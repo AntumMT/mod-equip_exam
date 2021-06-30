@@ -2,7 +2,7 @@
 
 ### Description:
 
-Tool to examine item stats in [Minetest](https://www.minetest.net/).
+A [Minetest](https://www.minetest.net/) mod that adds a node that can be used to examine equipment & item specs.
 
 ![screenshot](screenshot.png)
 
