@@ -2,6 +2,7 @@
 v1.3
 ----
 - collects all specs from `item.groups`, `item.tool_capabilities`, & `item.armor_groups`
+- added option to show technical names
 
 v1.2
 ----

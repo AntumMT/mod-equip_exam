@@ -6,6 +6,7 @@ Equipment Examiner=
 Specs:=
 Specs unavailable=
 Close=
+Technical Names=
 Name: @1=
 ID: @1=
 durability: @1=

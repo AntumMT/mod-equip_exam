@@ -32,7 +32,13 @@ local other_types = {
 	["full_punch_interval"] = "speed interval",
 }
 
-local function get_item_specs(item)
+local function format_spec(grp, name, value, technical)
+	if technical or not grp[name] then return name .. ": " .. value end
+
+	return S(grp[name] .. ": @1", value)
+end
+
+local function get_item_specs(item, technical)
 	if not item then return nil end
 
 	local specs = {}
@@ -40,12 +46,10 @@ local function get_item_specs(item)
 	if not name then name = item.description end
 	local id = item.name
 
-	if not name then
-		table.insert(specs, S("ID: @1", id))
-	else
+	if name then
 		table.insert(specs, S("Name: @1", name))
-		table.insert(specs, S("ID: @1", id))
 	end
+	table.insert(specs, S("ID: @1", id))
 
 	local groups = item.groups or {}
 	local tool_capabilities = item.tool_capabilities or {}
@@ -61,15 +65,13 @@ local function get_item_specs(item)
 	for k, v in pairs(tool_capabilities) do
 		if type(v) ~= "table" then
 			if tool_types[k] then
-				table.insert(specs_tool, S(tool_types[k] .. ": @1", v))
+				table.insert(specs_tool, format_spec(tool_types, k, v, technical))
 			elseif weapon_types[k] then
-				table.insert(specs_other, S(weapon_types[k] .. ": @1", v))
+				table.insert(specs_other, format_spec(weapon_types, k, v, technical))
 			elseif armor_types[k] then
-				table.insert(specs_other, S(armor_types[k] .. ": @1", v))
-			elseif other_types[k] then
-				table.insert(specs_other, S(other_types[k] .. ": @1", v))
+				table.insert(specs_other, format_spec(armor_types, k, v, technical))
 			else
-				table.insert(specs_other, k .. ": " .. v)
+				table.insert(specs_other, format_spec(other_types, k, v, technical))
 			end
 		end
 	end
@@ -80,17 +82,12 @@ local function get_item_specs(item)
 		else
 			if v.maxlevel then
 				if tool_types[k] then
-					table.insert(specs_tool, S(tool_types[k] .. ": @1", v.maxlevel))
+					table.insert(specs_tool, format_spec(tool_types, k, v.maxlevel, technical))
 					if v.uses then
 						table.insert(specs_tool, S("durability: @1", v.uses))
 					end
-				elseif other_types[k] then
-					table.insert(specs_other, S(other_types[k] .. ": @1", v.maxlevel))
-					if v.uses then
-						table.insert(specs_other, S("durability: @1", v.uses))
-					end
 				else
-					table.insert(specs_other, k .. ": " .. v.maxelevel)
+					table.insert(specs_other, format_spec(other_types, k, v.maxlevel, technical))
 					if v.uses then
 						table.insert(specs_other, S("durability: @1", v.uses))
 					end
@@ -101,35 +98,29 @@ local function get_item_specs(item)
 
 	for k, v in pairs(tool_capabilities.damage_groups) do
 		if weapon_types[k] then
-			table.insert(specs_weapon, S(weapon_types[k] .. ": @1", v))
-		elseif other_types[k] then
-			table.insert(specs_other, S(other_types[k] .. ": @1", v))
+			table.insert(specs_weapon, format_spec(weapon_types, k, v, technical))
 		else
-			table.insert(specs_other, k .. ": " .. v)
+			table.insert(specs_other, format_spec(other_types, k, v, technical))
 		end
 	end
 
 	for k, v in pairs(armor_groups) do
 		if armor_types[k] then
-			table.insert(specs_armor, S(armor_types[k] .. ": @1", v))
-		elseif other_types[k] then
-			table.insert(specs_other, S(other_types[k] .. ": @1", v))
+			table.insert(specs_armor, format_spec(armor_types, k, v, technical))
 		else
-			table.insert(specs_other, k .. ": " .. v)
+			table.insert(specs_other, format_spec(other_types, k, v, technical))
 		end
 	end
 
 	for k, v in pairs(groups) do
 		if tool_types[k] then
-			table.insert(specs_tool, S(tool_types[k] .. ": @1", v))
+			table.insert(specs_tool, format_spec(tool_types, k, v, technical))
 		elseif weapon_types[k] then
-			table.insert(specs_weapon, S(weapon_types[k] .. ": @1", v))
+			table.insert(specs_weapon, format_spec(weapon_types, k, v, technical))
 		elseif armor_types[k] then
-			table.insert(specs_armor, S(armor_types[k] .. ": @1", v))
-		elseif other_types[k] then
-			table.insert(specs_other, S(other_types[k] .. ": @1", v))
+			table.insert(specs_armor, format_spec(armor_types, k, v, technical))
 		else
-			table.insert(specs_other, k .. ": " .. v)
+			table.insert(specs_other, format_spec(other_types, k, v, technical))
 		end
 	end
 
@@ -169,10 +160,11 @@ end
 --  @function equip_exam:get_formspec
 --  @param item The item name string.
 --  @param empty If *true*, no stats information will be printed.
-function equip_exam:get_formspec(item, empty)
+function equip_exam:get_formspec(item, empty, nmeta)
 	local specs
+	local show_technical = nmeta:get_string("show_technical") == "true"
 	if not empty then
-		specs = get_item_specs(core.registered_items[item])
+		specs = get_item_specs(core.registered_items[item], show_technical)
 	else
 		specs = "" -- empty
 	end
@@ -182,29 +174,14 @@ function equip_exam:get_formspec(item, empty)
 	end
 
 	local formspec = "formspec_version[4]"
-		.. "size[12,9]"
+		.. "size[13,9]"
 		.. "list[context;input;1,1;1,1;0]"
+		.. "checkbox[0.25,2.55;techname;" .. S("Technical Names"):gsub(" ", "\n") .. ";"
+			.. tostring(show_technical) .. "]"
 		.. "button_exit[0.25,3.1;2.5,0.8;close;" .. S("Close") .. "]"
 		.. "label[3,0.7;" .. S("Specs:") .. "]"
-		.. "textlist[3,1;8,3;speclist;" .. specs .. ";1;false]"
-		.. "list[current_player;main;1.15,4.1;8,4;0]"
+		.. "textlist[3.5,1;8,3;speclist;" .. specs .. ";1;false]"
+		.. "list[current_player;main;1.65,4.1;8,4;0]"
 
 	return formspec
-end
-
-
---- Displays the formspec to a player.
---
---  @function equip_exam:show_formspec
---  @param pos The coordinates where the node is located.
---  @param player Player object to whom formspec will be displayed.
-function equip_exam:show_formspec(pos, player)
-	local playername = player:get_player_name()
-	if not playername or not player:is_player() then return end
-
-	local meta = core.get_meta(pos)
-	local inv = meta:get_inventory()
-	local contents = inv:get_list("input")[1]
-
-	core.show_formspec(playername, equip_exam.name, equip_exam:get_formspec(contents:get_name(), inv:is_empty("input")))
 end
