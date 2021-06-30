@@ -61,5 +61,5 @@ With `basic_materials`:
 
 - [Minetest forum](https://forum.minetest.net/viewtopic.php?t=26618)
 - [GitHub repo](https://github.com/AntumMT/mod-equip_exam)
-- [Changelog](CHANGES.txt)
+- [Changelog](changelog.txt)
 - [TODO](TODO.txt)
