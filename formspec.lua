@@ -156,7 +156,7 @@ local function format_spec(grp, name, value, technical)
 	end
 
 	if v_type == "string" then
-		value = core.formspec_escape(value)
+		value = core.formspec_escape(value:gsub("\n", " "))
 	end
 
 	if technical then return name .. ": " .. value end
