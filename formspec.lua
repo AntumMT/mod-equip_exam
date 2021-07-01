@@ -45,6 +45,7 @@ end
 
 
 local general_types = {
+	["description"] = "Description",
 	["uses"] = "durability",
 	["wear"] = true,
 }
@@ -127,6 +128,7 @@ local other_types = {
 local excluded_types = {
 	"name",
 	"description",
+	"short_description",
 	"type",
 	"punch_attack_uses",
 	"armor_use",
@@ -357,6 +359,10 @@ local function get_item_specs(item, technical)
 		table.insert(specs, S("Name: @1", name))
 	end
 	table.insert(specs, S("ID: @1", id))
+
+	if item.description and item.description ~= name then
+		table.insert(specs, format_spec(general_types, "description", item.description, technical))
+	end
 
 	local it = {}
 	for k, v in pairs(item_types) do

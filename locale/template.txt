@@ -9,6 +9,7 @@ Close=
 Technical Names=
 Name: @1=
 ID: @1=
+Description: @1=
 Type: @1=
 durability: @1=
 wear: @1=
