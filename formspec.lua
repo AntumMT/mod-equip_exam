@@ -233,18 +233,10 @@ local function get_item_specs(item, technical)
 			get_durability(armor_use), technical))
 	end
 
-	local imeta = ItemStack(item):get_meta()
-	local color = imeta:get_string("color")
+	local color = item.meta:get_string("color")
 	if color ~= "" then
-		-- FIXME:
 		table.insert(specs_other, S("color: @1", color))
 	end
-
-	--[[
-	if item.color then
-		table.insert(specs_other, S("color: @1", item.color))
-	end
-	]]
 
 	if name then
 		table.insert(specs, S("Name: @1", name))
@@ -306,7 +298,10 @@ function equip_exam:get_formspec(item, empty, nmeta)
 	local specs
 	local show_technical = nmeta:get_string("show_technical") == "true"
 	if not empty then
-		specs = get_item_specs(core.registered_items[item], show_technical)
+		local item_table = table.copy(core.registered_items[item:get_name()])
+		item_table.meta = item:get_meta()
+
+		specs = get_item_specs(item_table, show_technical)
 	else
 		specs = "" -- empty
 	end
