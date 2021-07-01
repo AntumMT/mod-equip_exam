@@ -58,8 +58,9 @@ local tool_node_types = {
 }
 
 local tool_types = {
-	["disable_repair"] = "repair disabled",
 	["max_drop_level"] = "node drop level",
+	["disable_repair"] = "repair disabled",
+	["not_repaired_by_anvil"] = "anvil repair disabled",
 }
 for k, v in pairs(tool_node_types) do
 	tool_types[k] = v
@@ -70,13 +71,24 @@ local node_types = {
 	["dig_immediate"] = "dig immediate",
 	["fall_damage_add_percent"] = "added fall damage",
 	["oddly_breakable_by_hand"] = "hand breakable",
+	["bouncy"] = true,
 	["ud_param2_colorable"] = "colorable",
 	["connect_to_raillike"] = "rail-like",
 	["disable_jump"] = "jump disabled",
 	["falling_node"] = "fall",
 	["float"] = "liquid boyancy",
+	["level"] = true,
+	["slippery"] = true,
 	["drop"] = "drops",
 	["is_ground_content"] = "ground content",
+	["buildable_to"] = "replaced on build",
+	["sunlight_propagates"] = true,
+	["walkable"] = true,
+	["pointable"] = true,
+	["diggable"] = true,
+	["climable"] = true,
+	["floodable"] = true,
+	["liquidtype"] = "liquid type",
 }
 for k, v in pairs(tool_node_types) do
 	node_types[k] = v
@@ -99,7 +111,9 @@ local armor_types = {
 	["armor_radiation"] = "radiation",
 }
 
-local entity_types = {}
+local entity_types = {
+	["punch_operable"] = true,
+}
 
 local other_types = {
 	["full_punch_interval"] = "speed interval",
