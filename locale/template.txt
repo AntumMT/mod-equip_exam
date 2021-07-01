@@ -9,6 +9,7 @@ Close=
 Technical Names=
 Name: @1=
 ID: @1=
+Type: @1=
 durability: @1=
 
 # tool

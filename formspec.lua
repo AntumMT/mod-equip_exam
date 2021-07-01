@@ -74,11 +74,6 @@ local function get_item_specs(item, technical)
 	if name:find("\n") then name = name:split("\n")[1]:trim() end
 	name = core.formspec_escape(name)
 
-	if name then
-		table.insert(specs, S("Name: @1", name))
-	end
-	table.insert(specs, S("ID: @1", id))
-
 	local groups = item.groups or {}
 	local tool_capabilities = item.tool_capabilities or {}
 	tool_capabilities.damage_groups = tool_capabilities.damage_groups or {}
@@ -91,6 +86,7 @@ local function get_item_specs(item, technical)
 	local specs_other = {}
 
 	local item_types = {}
+	item_types.tool = groups.tool ~= nil and groups.tool > 0
 
 	for k, v in pairs(tool_capabilities) do
 		if not is_excluded(k) then
@@ -185,6 +181,20 @@ local function get_item_specs(item, technical)
 		local armor_use = groups.armor_use or armor_groups.armor_use
 		table.insert(specs_armor, format_spec(armor_types, "armor_use",
 			get_durability(armor_use), technical))
+	end
+
+	if name then
+		table.insert(specs, S("Name: @1", name))
+	end
+	table.insert(specs, S("ID: @1", id))
+
+	local it = {}
+	for k, v in pairs(item_types) do
+		if v then table.insert(it, k) end
+	end
+
+	if #it > 0 then
+		table.insert(specs, S("Type: @1", core.formspec_escape(table.concat(it, ", "))))
 	end
 
 	if #specs_tool > 0 then

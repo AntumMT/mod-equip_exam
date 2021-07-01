@@ -4,5 +4,4 @@ TODO:
 - add healing value for foods
 - add slingshot support
 - check if item is node before setting "choppy", "snappy", etc.
-- show item "type"
 - support wlight
