@@ -46,6 +46,7 @@ end
 
 local general_types = {
 	["description"] = "Description",
+	["short_description"] = "Short Description",
 	["uses"] = "durability",
 }
 
@@ -370,8 +371,10 @@ local function get_item_specs(item, technical)
 		table.insert(specs, S("Mod: @1", item.mod_origin))
 	end
 
-	if item.description and item.description ~= name then
-		table.insert(specs, format_spec(general_types, "description", item.description, false))
+	for _, desc in ipairs({"description", "short_description"}) do
+		if item[desc] and item[desc] ~= name then
+			table.insert(specs, format_spec(general_types, desc, item[desc], false))
+		end
 	end
 
 	local it = {}
