@@ -121,7 +121,6 @@ local entity_types = {
 local other_types = {
 	["full_punch_interval"] = "speed interval",
 	["use_texture_alpha"] = "texture alpha mode",
-	["mod_origin"] = "mod",
 	["bagslots"] = "slots",
 }
 
@@ -134,6 +133,7 @@ local excluded_types = {
 	"punch_attack_uses",
 	"armor_use",
 	"stack_max",
+	"mod_origin",
 }
 
 local function is_excluded(spec)
@@ -365,6 +365,10 @@ local function get_item_specs(item, technical)
 		table.insert(specs, S("Name: @1", name))
 	end
 	table.insert(specs, S("ID: @1", id))
+
+	if item.mod_origin then
+		table.insert(specs, S("Mod: @1", item.mod_origin))
+	end
 
 	if item.description and item.description ~= name then
 		table.insert(specs, format_spec(general_types, "description", item.description, false))
