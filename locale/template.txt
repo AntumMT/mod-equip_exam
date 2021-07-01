@@ -52,12 +52,14 @@ shield def.: @1=
 healing: @1=
 radiation: @1=
 
+# entity
+punch operable: @1=
+
 # other
 Other:=
 flammable: @1=
 speed interval: @1=
 immortal: @1=
-punch operable: @1=
 color: @1=
 meat: @1=
 eatable: @1=

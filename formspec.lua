@@ -56,11 +56,14 @@ local armor_types = {
 	["armor_radiation"] = "radiation",
 }
 
+local entity_types = {
+	["punch_operable"] = true,
+}
+
 local other_types = {
 	["flammable"] = true,
 	["full_punch_interval"] = "speed interval",
 	["immortal"] = true,
-	["punch_operable"] = true,
 	["meat"] = true,
 	["eatable"] = true,
 	["wool"] = true,
@@ -122,11 +125,13 @@ local function get_item_specs(item, technical)
 	local specs_weapon = {}
 	local specs_armor = {}
 	local specs_node = {}
+	local specs_entity = {}
 	local specs_other = {}
 
 	local item_types = {}
 	item_types.tool = groups.tool ~= nil and groups.tool > 0
 	item_types.node = core.registered_nodes[item.name] ~= nil
+	item_types.entity = core.registered_entities[item.name] ~= nil
 
 	for k, v in pairs(tool_capabilities) do
 		if not is_excluded(k) then
@@ -208,6 +213,9 @@ local function get_item_specs(item, technical)
 					table.insert(specs_armor, format_spec(armor_types, k, v, technical))
 					item_types.armor = true
 				end
+			elseif entity_types[k] then
+				table.insert(specs_entity, format_spec(entity_types, k, v, technical))
+				item_types.entity = true
 			else
 				table.insert(specs_other, format_spec(other_types, k, v, technical))
 			end
@@ -225,6 +233,19 @@ local function get_item_specs(item, technical)
 			get_durability(armor_use), technical))
 	end
 
+	local imeta = ItemStack(item):get_meta()
+	local color = imeta:get_string("color")
+	if color ~= "" then
+		-- FIXME:
+		table.insert(specs_other, S("color: @1", color))
+	end
+
+	--[[
+	if item.color then
+		table.insert(specs_other, S("color: @1", item.color))
+	end
+	]]
+
 	if name then
 		table.insert(specs, S("Name: @1", name))
 	end
@@ -237,13 +258,6 @@ local function get_item_specs(item, technical)
 
 	if #it > 0 then
 		table.insert(specs, S("Type: @1", core.formspec_escape(table.concat(it, ", "))))
-	end
-
-	local imeta = ItemStack(item):get_meta()
-	local color = imeta:get_string("color")
-	if color ~= "" then
-		-- FIXME:
-		table.insert(specs_other, S("color: @1", color))
 	end
 
 	if #specs_tool > 0 then

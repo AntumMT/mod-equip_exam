@@ -4,4 +4,3 @@ TODO:
 - add healing value for foods
 - add slingshot support
 - support wlight
-- add entity specs
