@@ -14,6 +14,22 @@ durability: @1=
 
 # tool
 Tool:=
+repair disabled: @1=
+
+# node
+Node:=
+attached: @1=
+dig immediate: @1=
+added fall damage: @1=
+hand breakable: @1=
+bouncy: @1=
+colorable: @1=
+rail-like: @1=
+jump disabled: @1=
+fall: @1=
+liquid boyancy: @1=
+
+# tool & node
 mine level: @1=
 chop level: @1=
 dig level: @1=
@@ -36,7 +52,9 @@ radiation: @1=
 
 # other
 Other:=
-flammability: @1=
+flammable: @1=
 speed interval: @1=
-fall damage: @1=
-hand breakable: @1=
+immortal: @1=
+punch operable: @1=
+max drop level: @1=
+color: @1=

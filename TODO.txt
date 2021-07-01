@@ -3,5 +3,5 @@ TODO:
 - place item back in inventory when formspec is closed
 - add healing value for foods
 - add slingshot support
-- check if item is node before setting "choppy", "snappy", etc.
 - support wlight
+- add entity specs
