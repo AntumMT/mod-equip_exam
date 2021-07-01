@@ -72,6 +72,7 @@ local function get_item_specs(item, technical)
 
 	-- remove multi-lines
 	if name:find("\n") then name = name:split("\n")[1]:trim() end
+	name = core.formspec_escape(name)
 
 	if name then
 		table.insert(specs, S("Name: @1", name))
