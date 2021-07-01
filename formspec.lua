@@ -367,7 +367,7 @@ local function get_item_specs(item, technical)
 	table.insert(specs, S("ID: @1", id))
 
 	if item.description and item.description ~= name then
-		table.insert(specs, format_spec(general_types, "description", item.description, technical))
+		table.insert(specs, format_spec(general_types, "description", item.description, false))
 	end
 
 	local it = {}
