@@ -4,7 +4,7 @@
 # general
 Equipment Examiner=
 Specs:=
-Specs unavailable=
+specs unavailable=
 Close=
 Technical Names=
 Name: @1=

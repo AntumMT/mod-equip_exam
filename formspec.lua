@@ -370,7 +370,7 @@ function equip_exam:get_formspec(item, empty, nmeta)
 	end
 
 	if not specs then
-		specs = S("Specs unavailable")
+		specs = S("specs unavailable")
 	end
 
 	local formspec = "formspec_version[4]"
