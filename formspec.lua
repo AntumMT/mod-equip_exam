@@ -138,7 +138,7 @@ local function format_spec(grp, name, value, technical)
 	if technical then return name .. ": " .. value end
 
 	local nname = grp[name]
-	if not nname then
+	if not nname or nname == true then
 		nname = name:gsub("_", " ")
 	end
 
