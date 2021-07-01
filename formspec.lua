@@ -70,6 +70,9 @@ local function get_item_specs(item, technical)
 	if not name then name = item.description end
 	local id = item.name
 
+	-- remove multi-lines
+	if name:find("\n") then name = name:split("\n")[1]:trim() end
+
 	if name then
 		table.insert(specs, S("Name: @1", name))
 	end
