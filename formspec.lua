@@ -3,6 +3,7 @@ local S = core.get_translator(equip_exam.name)
 
 local general_types = {
 	["uses"] = "durability",
+	["wear"] = true,
 }
 
 local tool_node_types = {
@@ -34,6 +35,7 @@ local node_types = {
 	["float"] = "liquid boyancy",
 	["level"] = true,
 	["slippery"] = true,
+	["drop"] = "drops",
 }
 for k, v in pairs(tool_node_types) do
 	node_types[k] = v
@@ -61,8 +63,9 @@ local entity_types = {
 }
 
 local other_types = {
+	["inventory_image"] = true,
+	["wield_image"] = true,
 	["flammable"] = true,
-	["full_punch_interval"] = "speed interval",
 	["immortal"] = true,
 	["meat"] = true,
 	["eatable"] = true,
@@ -70,12 +73,21 @@ local other_types = {
 	["metal"] = true,
 	["weapon"] = true,
 	["heavy"] = true,
+	["full_punch_interval"] = "speed interval",
+	["range"] = true,
+	["use_texture_alpha"] = "texture alpha mode",
+	["stackable"] = true,
+	["mod_origin"] = "mod",
 }
 
 -- excluded from automatic parsing
 local excluded_types = {
+	"name",
+	"description",
+	"type",
 	"punch_attack_uses",
 	"armor_use",
+	"stack_max",
 }
 
 local function is_excluded(spec)
@@ -129,7 +141,7 @@ local function get_item_specs(item, technical)
 	local specs_other = {}
 
 	local item_types = {}
-	item_types.tool = groups.tool ~= nil and groups.tool > 0
+	item_types.tool = core.registered_tools[item.name] ~= nil
 	item_types.node = core.registered_nodes[item.name] ~= nil
 	item_types.entity = core.registered_entities[item.name] ~= nil
 
@@ -222,7 +234,58 @@ local function get_item_specs(item, technical)
 		end
 	end
 
-	if item_types.weapon then
+	local is_ranged = false
+
+	for k, v in pairs(table.copy(item)) do
+		local v_type = type(v)
+		if v_type == "boolean" then
+			if v then
+				v = S("yes")
+			else
+				v = S("no")
+			end
+		elseif v_type == "table" or v_type == "function" or v_type == "userdata" then
+			v = nil
+		end
+
+		if v ~= nil and not is_excluded(k) then
+			if tool_types[k] then
+				table.insert(specs_tool, format_spec(tool_types, k, v, technical))
+				item_types.tool = true
+			elseif weapon_types[k] then
+				table.insert(specs_weapon, format_spec(weapon_types, k, v, technical))
+				item_types.weapon = true
+			elseif armor_types[k] then
+				table.insert(specs_armor, format_spec(armor_types, k, v, technical))
+				item_types.armor = true
+			elseif node_types[k] then
+				table.insert(specs_node, format_spec(node_types, k, v, technical))
+				item_types.node = true
+			elseif entity_types[k] then
+				table.insert(specs_entity, format_spec(entity_types, k, v, technical))
+				item_types.entity = true
+			else
+				local specs_group = specs_other
+				-- hack for slingshot
+				if k == "range" and id:find("^slingshot:") then
+					specs_group = specs_weapon
+					item_types.weapon = true
+					is_ranged = true
+				end
+
+				table.insert(specs_group, format_spec(other_types, k, v, technical))
+			end
+		end
+	end
+
+	local stackable = S("yes")
+	if item.stack_max == 1 then
+		stackable = S("no")
+	end
+
+	table.insert(specs_other, format_spec(other_types, "stackable", stackable, technical))
+
+	if item_types.weapon and not is_ranged then
 		table.insert(specs_weapon, format_spec(weapon_types, "punch_attack_uses",
 			get_durability(tool_capabilities.punch_attack_uses), technical))
 	end

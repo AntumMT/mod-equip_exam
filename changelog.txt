@@ -6,6 +6,7 @@ v1.3
 - item type(s) are displayed as a list
 - parses node specs
 - parses entity specs
+- supports many more attributes
 
 v1.2
 ----
