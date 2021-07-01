@@ -361,8 +361,12 @@ function equip_exam:get_formspec(item, empty, nmeta)
 	local specs
 	local show_technical = nmeta:get_string("show_technical") == "true"
 	if not empty then
-		local item_table = table.copy(core.registered_items[item:get_name()])
-		item_table.meta = item:get_meta()
+		local item_table = core.registered_items[item:get_name()]
+		-- make sure we're using a recognized item before copying
+		if item_table then
+			item_table = table.copy(item_table)
+			item_table.meta = item:get_meta()
+		end
 
 		specs = get_item_specs(item_table, show_technical)
 	else
