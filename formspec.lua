@@ -141,12 +141,18 @@ local function is_excluded(spec)
 end
 
 local function format_spec(grp, name, value, technical)
-	if type(value) == "boolean" then
+	local v_type = type(value)
+
+	if v_type == "boolean" then
 		if value then
 			value = S("yes")
 		else
 			value = S("no")
 		end
+	end
+
+	if v_type == "string" then
+		value = core.formspec_escape(value)
 	end
 
 	if technical then return name .. ": " .. value end
@@ -156,10 +162,12 @@ local function format_spec(grp, name, value, technical)
 		nname = name:gsub("_", " ")
 	end
 
+	-- FIXME: name may need formspec_escape as well
 	return S(nname .. ": @1", value)
 end
 
 local function get_durability(value)
+	-- FIXME: not sure if `nil` means unlimited
 	if not value or value == 0 then return "∞" end
 
 	return value
