@@ -1,6 +1,49 @@
 
 local S = core.get_translator(equip_exam.name)
 
+
+-- START: wlight & wielded_light support
+
+local light_items = {}
+
+if core.global_exists("wlight") then
+	local wlight_register_item_old = wlight.register_item
+	local wlight_register_armor_old = wlight.register_armor
+
+	wlight.register_item = function(iname, radius)
+		light_items[iname] = {radius=radius}
+
+		return wlight_register_item_old(iname, radius)
+	end
+
+	wlight.register_armor = function(iname, radius, litem)
+		light_items[iname] = {radius=radius}
+
+		return wlight_register_armor_old(iname, radius, litem)
+	end
+
+	-- re-register torch & megatorch
+	if core.registered_items["default:torch"] then
+		wlight.register_item("default:torch")
+	end
+
+	if core.registered_items["wlight:megatorch"] then
+		wlight.register_item("wlight:megatorch", 10)
+	end
+end
+
+if core.global_exists("wielded_light") then
+	local wielded_light_register_old = wielded_light.register_item_light
+	wielded_light.register_item_light = function(iname, light_level)
+		light_items[iname] = {radius=light_level}
+
+		return wielded_light_register_old(iname, light_level)
+	end
+end
+
+-- END: wlight & wielded_light support
+
+
 local general_types = {
 	["uses"] = "durability",
 	["wear"] = true,
@@ -299,6 +342,15 @@ local function get_item_specs(item, technical)
 	local color = item.meta:get_string("color")
 	if color ~= "" then
 		table.insert(specs_other, S("color: @1", color))
+	end
+
+	if light_items[id] then
+		table.insert(specs_other, S("emits light: @1", S("yes")))
+
+		local radius = light_items[id].radius
+		if radius then
+			table.insert(specs_other, S("light radius: @1", radius))
+		end
 	end
 
 	if name then

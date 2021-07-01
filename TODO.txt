@@ -1,6 +1,5 @@
 
 TODO:
 - add healing value for foods
-- support wlight
 - show wear amount
 - retrieve color value from param2 attribute

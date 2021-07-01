@@ -79,3 +79,5 @@ range: @1=
 texture alpha mode: @1=
 stackable: @1=
 mod: @1=
+emits light: @1=
+light radius: @1=
