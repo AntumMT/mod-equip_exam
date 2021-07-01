@@ -10,10 +10,12 @@ local tool_node_types = {
 	["choppy"] = "chop level",
 	["crumbly"] = "dig level",
 	["snappy"] = "snap level",
+	["explody"] = "explosive level",
 }
 
 local tool_types = {
 	["disable_repair"] = "repair disabled",
+	["max_drop_level"] = "node drop level",
 }
 for k, v in pairs(tool_node_types) do
 	tool_types[k] = v
@@ -59,7 +61,12 @@ local other_types = {
 	["full_punch_interval"] = "speed interval",
 	["immortal"] = true,
 	["punch_operable"] = true,
-	["max_drop_level"] = true,
+	["meat"] = true,
+	["eatable"] = true,
+	["wool"] = true,
+	["metal"] = true,
+	["weapon"] = true,
+	["heavy"] = true,
 }
 
 -- excluded from automatic parsing

@@ -15,6 +15,7 @@ durability: @1=
 # tool
 Tool:=
 repair disabled: @1=
+node drop level: @1=
 
 # node
 Node:=
@@ -34,6 +35,7 @@ mine level: @1=
 chop level: @1=
 dig level: @1=
 snap level: @1=
+explosive level: @1=
 
 # weapon
 Weapon:=
@@ -56,5 +58,10 @@ flammable: @1=
 speed interval: @1=
 immortal: @1=
 punch operable: @1=
-max drop level: @1=
 color: @1=
+meat: @1=
+eatable: @1=
+wool: @1=
+metal: @1=
+weapon: @1=
+heavy: @1=
