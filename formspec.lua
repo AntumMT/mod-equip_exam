@@ -61,6 +61,8 @@ local tool_types = {
 	["max_drop_level"] = "node drop level",
 	["disable_repair"] = "repair disabled",
 	["not_repaired_by_anvil"] = "anvil repair disabled",
+	["_airtanks_uses"] = "uses",
+	["_airtanks_empty"] = "replace empty with",
 }
 for k, v in pairs(tool_node_types) do
 	tool_types[k] = v
@@ -89,6 +91,7 @@ local node_types = {
 	["climable"] = true,
 	["floodable"] = true,
 	["liquidtype"] = "liquid type",
+	["drawtype"] = true,
 }
 for k, v in pairs(tool_node_types) do
 	node_types[k] = v
@@ -119,6 +122,7 @@ local other_types = {
 	["full_punch_interval"] = "speed interval",
 	["use_texture_alpha"] = "texture alpha mode",
 	["mod_origin"] = "mod",
+	["bagslots"] = "slots",
 }
 
 -- excluded from automatic parsing
