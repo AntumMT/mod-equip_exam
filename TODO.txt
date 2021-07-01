@@ -6,5 +6,4 @@ TODO:
 - formspec escape descriptions (Name)
 - check if item is node before setting "choppy", "snappy", etc.
 - show item "type"
-- use infinity symbol if "uses" is 0 (unlimited)
-- suppore wlight
+- support wlight

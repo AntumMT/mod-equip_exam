@@ -1,6 +1,9 @@
 
 local S = core.get_translator(equip_exam.name)
 
+local general_types = {
+	["uses"] = "durability",
+}
 
 local tool_types = {
 	["cracky"] = "mine level",
@@ -11,7 +14,6 @@ local tool_types = {
 
 local weapon_types = {
 	["fleshy"] = "attack",
-	["uses"] = "durability",
 	["punch_attack_uses"] = "durability",
 }
 
@@ -34,10 +36,30 @@ local other_types = {
 	["oddly_breakable_by_hand"] = "hand breakable",
 }
 
+-- excluded from automatic parsing
+local excluded_types = {
+	"punch_attack_uses",
+	"armor_use",
+}
+
+local function is_excluded(spec)
+	for _, ex in ipairs(excluded_types) do
+		if spec == ex then return true end
+	end
+
+	return false
+end
+
 local function format_spec(grp, name, value, technical)
 	if technical or not grp[name] then return name .. ": " .. value end
 
 	return S(grp[name] .. ": @1", value)
+end
+
+local function get_durability(value)
+	if not value or value == 0 then return "∞" end
+
+	return value
 end
 
 local function get_item_specs(item, technical)
@@ -64,16 +86,26 @@ local function get_item_specs(item, technical)
 	local specs_armor = {}
 	local specs_other = {}
 
+	local item_types = {}
+
 	for k, v in pairs(tool_capabilities) do
-		if type(v) ~= "table" then
-			if tool_types[k] then
-				table.insert(specs_tool, format_spec(tool_types, k, v, technical))
-			elseif weapon_types[k] then
-				table.insert(specs_other, format_spec(weapon_types, k, v, technical))
-			elseif armor_types[k] then
-				table.insert(specs_other, format_spec(armor_types, k, v, technical))
-			else
-				table.insert(specs_other, format_spec(other_types, k, v, technical))
+		if not is_excluded(k) then
+			if type(v) ~= "table" then
+				if tool_types[k] then
+					table.insert(specs_tool, format_spec(tool_types, k, v, technical))
+					item_types.tool = true
+				elseif weapon_types[k] then
+					if k == "punch_attack_uses" then
+						v = get_durability(v)
+					end
+					table.insert(specs_weapon, format_spec(weapon_types, k, v, technical))
+					item_types.weapon = true
+				elseif armor_types[k] then
+					table.insert(specs_armor, format_spec(armor_types, k, v, technical))
+					item_types.armor = true
+				else
+					table.insert(specs_other, format_spec(other_types, k, v, technical))
+				end
 			end
 		end
 	end
@@ -85,14 +117,11 @@ local function get_item_specs(item, technical)
 			if v.maxlevel then
 				if tool_types[k] then
 					table.insert(specs_tool, format_spec(tool_types, k, v.maxlevel, technical))
-					if v.uses then
-						table.insert(specs_tool, S("durability: @1", v.uses))
-					end
+					table.insert(specs_tool, format_spec(general_types, "uses", get_durability(v.uses), technical))
+					item_types.tool = true
 				else
 					table.insert(specs_other, format_spec(other_types, k, v.maxlevel, technical))
-					if v.uses then
-						table.insert(specs_other, S("durability: @1", v.uses))
-					end
+					table.insert(specs_other, format_spec(general_types, "uses", get_durability(v.uses), technical))
 				end
 			end
 		end
@@ -101,29 +130,57 @@ local function get_item_specs(item, technical)
 	for k, v in pairs(tool_capabilities.damage_groups) do
 		if weapon_types[k] then
 			table.insert(specs_weapon, format_spec(weapon_types, k, v, technical))
+			if k == "fleshy" then
+				table.insert(specs_weapon, format_spec(weapon_types, "punch_attack_uses",
+					get_durability(tool_capabilities.punch_attack_uses), technical))
+			end
+			item_types.weapon = true
 		else
 			table.insert(specs_other, format_spec(other_types, k, v, technical))
 		end
 	end
 
 	for k, v in pairs(armor_groups) do
-		if armor_types[k] then
-			table.insert(specs_armor, format_spec(armor_types, k, v, technical))
-		else
-			table.insert(specs_other, format_spec(other_types, k, v, technical))
+		if not is_excluded(k) then
+			if armor_types[k] then
+				if v ~= 0 then
+					table.insert(specs_armor, format_spec(armor_types, k, v, technical))
+					item_types.armor = true
+				end
+			else
+				table.insert(specs_other, format_spec(other_types, k, v, technical))
+			end
 		end
 	end
 
 	for k, v in pairs(groups) do
-		if tool_types[k] then
-			table.insert(specs_tool, format_spec(tool_types, k, v, technical))
-		elseif weapon_types[k] then
-			table.insert(specs_weapon, format_spec(weapon_types, k, v, technical))
-		elseif armor_types[k] then
-			table.insert(specs_armor, format_spec(armor_types, k, v, technical))
-		else
-			table.insert(specs_other, format_spec(other_types, k, v, technical))
+		if not is_excluded(k) then
+			if tool_types[k] then
+				table.insert(specs_tool, format_spec(tool_types, k, v, technical))
+				item_types.tool = true
+			elseif weapon_types[k] then
+				table.insert(specs_weapon, format_spec(weapon_types, k, v, technical))
+				item_types.weapon = true
+			elseif armor_types[k] then
+				if v ~= 0 then
+					table.insert(specs_armor, format_spec(armor_types, k, v, technical))
+					item_types.armor = true
+				end
+			else
+				table.insert(specs_other, format_spec(other_types, k, v, technical))
+			end
 		end
+	end
+
+	if item_types.weapon then
+		table.insert(specs_weapon, format_spec(weapon_types, "punch_attack_uses",
+			get_durability(tool_capabilities.punch_attack_uses), technical))
+	end
+
+	if item_types.armor then
+		local armor_use = groups.armor_use or armor_groups.armor_use
+		table.insert(specs_armor, format_spec(armor_types, "armor_use",
+			get_durability(armor_use), technical))
 	end
 
 	if #specs_tool > 0 then
