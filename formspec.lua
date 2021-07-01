@@ -47,7 +47,6 @@ end
 local general_types = {
 	["description"] = "Description",
 	["uses"] = "durability",
-	["wear"] = true,
 }
 
 local tool_node_types = {
@@ -71,15 +70,13 @@ local node_types = {
 	["dig_immediate"] = "dig immediate",
 	["fall_damage_add_percent"] = "added fall damage",
 	["oddly_breakable_by_hand"] = "hand breakable",
-	["bouncy"] = true,
 	["ud_param2_colorable"] = "colorable",
 	["connect_to_raillike"] = "rail-like",
 	["disable_jump"] = "jump disabled",
 	["falling_node"] = "fall",
 	["float"] = "liquid boyancy",
-	["level"] = true,
-	["slippery"] = true,
 	["drop"] = "drops",
+	["is_ground_content"] = "ground content",
 }
 for k, v in pairs(tool_node_types) do
 	node_types[k] = v
@@ -102,25 +99,11 @@ local armor_types = {
 	["armor_radiation"] = "radiation",
 }
 
-local entity_types = {
-	["punch_operable"] = true,
-}
+local entity_types = {}
 
 local other_types = {
-	["inventory_image"] = true,
-	["wield_image"] = true,
-	["flammable"] = true,
-	["immortal"] = true,
-	["meat"] = true,
-	["eatable"] = true,
-	["wool"] = true,
-	["metal"] = true,
-	["weapon"] = true,
-	["heavy"] = true,
 	["full_punch_interval"] = "speed interval",
-	["range"] = true,
 	["use_texture_alpha"] = "texture alpha mode",
-	["stackable"] = true,
 	["mod_origin"] = "mod",
 }
 
@@ -144,10 +127,18 @@ local function is_excluded(spec)
 end
 
 local function format_spec(grp, name, value, technical)
-	if technical or not grp[name] then return name .. ": " .. value end
+	if type(value) == "boolean" then
+		if value then
+			value = S("yes")
+		else
+			value = S("no")
+		end
+	end
+
+	if technical then return name .. ": " .. value end
 
 	local nname = grp[name]
-	if nname == true then
+	if not nname then
 		nname = name:gsub("_", " ")
 	end
 
@@ -283,13 +274,7 @@ local function get_item_specs(item, technical)
 
 	for k, v in pairs(table.copy(item)) do
 		local v_type = type(v)
-		if v_type == "boolean" then
-			if v then
-				v = S("yes")
-			else
-				v = S("no")
-			end
-		elseif v_type == "table" or v_type == "function" or v_type == "userdata" then
+		if v_type == "table" or v_type == "function" or v_type == "userdata" then
 			v = nil
 		end
 
@@ -323,12 +308,7 @@ local function get_item_specs(item, technical)
 		end
 	end
 
-	local stackable = S("yes")
-	if item.stack_max == 1 then
-		stackable = S("no")
-	end
-
-	table.insert(specs_other, format_spec(other_types, "stackable", stackable, technical))
+	table.insert(specs_other, format_spec(other_types, "stackable", item.stack_max ~= 1, technical))
 
 	if item_types.weapon and not is_ranged then
 		table.insert(specs_weapon, format_spec(weapon_types, "punch_attack_uses",

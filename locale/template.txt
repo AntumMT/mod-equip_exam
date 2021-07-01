@@ -36,6 +36,7 @@ liquid boyancy: @1=
 level: @1=
 slippery: @1=
 drops: @1=
+ground content: @1=
 
 # tool & node
 mine level: @1=
