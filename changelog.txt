@@ -3,6 +3,7 @@ v1.5
 ----
 - parses meta information
 - supports unifieddyes node coloring
+- non-real attributes are hidden in technical view
 
 v1.4
 ----
