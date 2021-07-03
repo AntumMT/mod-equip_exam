@@ -6,3 +6,4 @@ TODO:
 - add xdecor:workbench & workbench:workbench support
 - show tooltip when text is longer than list width (or show in separate widget)
 - add food attributes
+- separate "emits light" values between nodes, tools, & armor
