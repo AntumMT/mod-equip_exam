@@ -160,7 +160,7 @@ local function format_spec(grp, name, value, technical)
 	end
 
 	if v_type == "string" then
-		value = core.formspec_escape(value:gsub("\n", " "))
+		value = value:gsub("\n", " ")
 	end
 
 	if technical then return name .. ": " .. value end
@@ -191,7 +191,6 @@ local function get_item_specs(item, technical)
 
 	-- remove multi-lines
 	if name:find("\n") then name = name:split("\n")[1]:trim() end
-	name = core.formspec_escape(name)
 
 	local groups = item.groups or {}
 	local tool_capabilities = item.tool_capabilities or {}
@@ -456,7 +455,7 @@ local function get_item_specs(item, technical)
 
 	if not specs then return end
 
-	return table.concat(specs, ",")
+	return core.formspec_escape(table.concat(specs, "|")):gsub("|", ",")
 end
 
 
@@ -482,16 +481,16 @@ function equip_exam:get_formspec(item, empty, nmeta)
 	end
 
 	if not specs then
-		specs = S("specs unavailable")
+		specs = core.formspec_escape(S("specs unavailable"))
 	end
 
 	local formspec = "formspec_version[4]"
 		.. "size[13,9]"
 		.. "list[context;input;1,1;1,1;0]"
-		.. "checkbox[0.25,2.55;techname;" .. S("Technical Names"):gsub(" ", "\n") .. ";"
-			.. tostring(show_technical) .. "]"
-		.. "button_exit[0.25,3.1;2.5,0.8;close;" .. S("Close") .. "]"
-		.. "label[3,0.7;" .. S("Specs:") .. "]"
+		.. "checkbox[0.25,2.55;techname;" .. core.formspec_escape(S("Technical Names"):gsub(" ", "\n"))
+			.. ";" .. tostring(show_technical) .. "]"
+		.. "button_exit[0.25,3.1;2.5,0.8;close;" .. core.formspec_escape(S("Close")) .. "]"
+		.. "label[3,0.7;" .. core.formspec_escape(S("Specs:")) .. "]"
 		.. "textlist[3.5,1;8,3;speclist;" .. specs .. ";1;false]"
 		.. "list[current_player;main;1.65,4.1;8,4;0]"
 
