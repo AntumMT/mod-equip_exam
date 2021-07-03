@@ -138,6 +138,7 @@ local excluded_types = {
 	"stack_max",
 	"mod_origin",
 	"light_source",
+	"ud_param2_colorable",
 }
 
 local function is_excluded(spec)
@@ -374,6 +375,23 @@ local function get_item_specs(item, technical)
 		local radius = light_items[id].radius
 		if radius then
 			table.insert(specs_tool, format_spec(tool_types, "light_radius", radius, technical))
+		end
+	end
+
+	local colorable = groups.ud_param2_colorable ~= nil
+	if colorable then
+		item_types.node = true
+		table.insert(specs_node, format_spec(node_types, "ud_param2_colorable", groups.ud_param2_colorable,
+			technical))
+
+		local p_idx = tonumber(item.meta:get_string("palette_index"))
+
+		-- FIXME: perhaps store this in local variable to reduce load (will need to add unifieddyes as opt depends)
+		if not technical and p_idx and core.global_exists("unifieddyes") then
+			local color = unifieddyes.color_to_name(p_idx, item)
+			if color then
+				table.insert(specs_node, S("color: @1", color))
+			end
 		end
 	end
 

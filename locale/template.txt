@@ -24,9 +24,6 @@ Mod: @1=
 Description: @1=
 Short Description: @1=
 Type: @1=
-durability: @1=
-wear: @1=
-emits light: @1=
 
 # tool
 Tool:=
@@ -113,3 +110,7 @@ style: @1=
 not in creative inventory: @1=
 liquids pointable: @1=
 palette: @1=
+palette index: @1=
+durability: @1=
+wear: @1=
+emits light: @1=

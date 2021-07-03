@@ -2,6 +2,7 @@
 v1.5
 ----
 - parses meta information
+- supports unifieddyes node coloring
 
 v1.4
 ----
