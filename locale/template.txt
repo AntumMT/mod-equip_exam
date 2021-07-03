@@ -26,6 +26,7 @@ Short Description: @1=
 Type: @1=
 durability: @1=
 wear: @1=
+emits light: @1=
 
 # tool
 Tool:=
@@ -34,6 +35,7 @@ repair disabled: @1=
 anvil repair disabled: @1=
 uses: @1=
 replace empty with: @1=
+light radius: @1=
 
 # node
 Node:=
@@ -60,6 +62,7 @@ climable: @1=
 floodable: @1=
 liquid type: @1=
 drawtype: @1=
+light source: @1=
 
 # tool & node
 mine level: @1=
@@ -86,7 +89,7 @@ radiation: @1=
 # entity
 punch operable: @1=
 
-# other
+# other & meta
 Other:=
 Meta:=
 inventory image: @1=
@@ -104,9 +107,6 @@ speed interval: @1=
 range: @1=
 texture alpha mode: @1=
 stackable: @1=
-emits light: @1=
-light radius: @1=
-light source: @1=
 slots: @1=
 style: @1=
 not in creative inventory: @1=

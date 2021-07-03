@@ -64,6 +64,7 @@ local tool_types = {
 	["not_repaired_by_anvil"] = "anvil repair disabled",
 	["_airtanks_uses"] = "uses",
 	["_airtanks_empty"] = "replace empty with",
+	["radius"] = "light radius",
 }
 for k, v in pairs(tool_node_types) do
 	tool_types[k] = v
@@ -349,11 +350,12 @@ local function get_item_specs(item, technical)
 	end
 
 	if light_items[id] then
-		table.insert(specs_other, S("emits light: @1", S("yes")))
+		item_types.tool = true
+		table.insert(specs_tool, S("emits light: @1", S("yes")))
 
 		local radius = light_items[id].radius
 		if radius then
-			table.insert(specs_other, S("light radius: @1", radius))
+			table.insert(specs_tool, format_spec(tool_types, "light_radius", radius, technical))
 		end
 	end
 
