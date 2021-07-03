@@ -5,5 +5,4 @@ TODO:
 - retrieve color value from param2 attribute
 - add xdecor:workbench & workbench:workbench support
 - show tooltip when text is longer than list width (or show in separate widget)
-- trim leading/trailing underscores from keys before replacing with whitespace
 - add food attributes

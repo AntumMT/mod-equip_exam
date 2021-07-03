@@ -164,7 +164,7 @@ local function format_spec(grp, name, value, technical)
 
 	local nname = grp[name]
 	if not nname or nname == true then
-		nname = name:gsub("_", " ")
+		nname = name:gsub("_", " "):trim()
 	end
 
 	-- FIXME: name may need formspec_escape as well
