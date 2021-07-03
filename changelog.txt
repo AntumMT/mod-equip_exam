@@ -1,4 +1,8 @@
 
+v1.4
+----
+- bugfix: added missing optional dependency "default"
+
 v1.3
 ----
 - collects all specs from `item.groups`, `item.tool_capabilities`, & `item.armor_groups`
