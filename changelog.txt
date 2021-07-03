@@ -1,4 +1,8 @@
 
+v1.5
+----
+- parses meta information
+
 v1.4
 ----
 - bugfix: added missing optional dependency "default"

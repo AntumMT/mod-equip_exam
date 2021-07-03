@@ -348,11 +348,6 @@ local function get_item_specs(item, technical)
 			get_durability(armor_use), technical))
 	end
 
-	local color = item.meta:get_string("color")
-	if color ~= "" then
-		table.insert(specs_other, S("color: @1", color))
-	end
-
 	if light_items[id] then
 		table.insert(specs_other, S("emits light: @1", S("yes")))
 
@@ -414,6 +409,27 @@ local function get_item_specs(item, technical)
 		table.insert(specs, S("Other:"))
 		for _, sp in ipairs(specs_other) do
 			table.insert(specs, "  " .. sp)
+		end
+	end
+
+	local has_meta = false
+	local meta_table = item.meta:to_table().fields
+
+	-- clean excluded types
+	for _, ex in ipairs(excluded_types) do
+		meta_table[ex] = nil
+	end
+
+	-- check that meta is not empty
+	for k in pairs(meta_table) do
+		has_meta = true
+		break
+	end
+
+	if has_meta then
+		table.insert(specs, S("Meta:"))
+		for k, v in pairs(meta_table) do
+			table.insert(specs, "  " .. format_spec(other_types, k, v, technical))
 		end
 	end
 
