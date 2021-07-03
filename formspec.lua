@@ -94,6 +94,7 @@ local node_types = {
 	["floodable"] = true,
 	["liquidtype"] = "liquid type",
 	["drawtype"] = true,
+	["light_source"] = "light level",
 }
 for k, v in pairs(tool_node_types) do
 	node_types[k] = v
@@ -136,6 +137,7 @@ local excluded_types = {
 	"armor_use",
 	"stack_max",
 	"mod_origin",
+	"light_source",
 }
 
 local function is_excluded(spec)
@@ -347,6 +349,12 @@ local function get_item_specs(item, technical)
 		local armor_use = groups.armor_use or armor_groups.armor_use
 		table.insert(specs_armor, format_spec(armor_types, "armor_use",
 			get_durability(armor_use), technical))
+	end
+
+	if item.light_source then
+		item_types.node = true
+		table.insert(specs_node, S("emits light: @1", S("yes")))
+		table.insert(specs_node, format_spec(node_types, "light_source", item.light_source, technical))
 	end
 
 	if light_items[id] then

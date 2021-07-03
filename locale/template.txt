@@ -62,7 +62,7 @@ climable: @1=
 floodable: @1=
 liquid type: @1=
 drawtype: @1=
-light source: @1=
+light level: @1=
 
 # tool & node
 mine level: @1=
