@@ -107,6 +107,7 @@ speed interval: @1=
 range: @1=
 texture alpha mode: @1=
 stackable: @1=
+stack max: @1=
 slots: @1=
 style: @1=
 not in creative inventory: @1=

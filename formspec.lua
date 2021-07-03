@@ -338,7 +338,13 @@ local function get_item_specs(item, technical)
 		end
 	end
 
-	table.insert(specs_other, format_spec(other_types, "stackable", item.stack_max ~= 1, technical))
+	local stackable = item.stack_max ~= 1
+	if not technical then
+		table.insert(specs_other, format_spec(other_types, "stackable", stackable, false))
+	end
+	if item.stack_max and (technical or stackable) then
+		table.insert(specs_other, format_spec(other_types, "stack_max", item.stack_max, technical))
+	end
 
 	if item_types.weapon and not is_ranged then
 		table.insert(specs_weapon, format_spec(weapon_types, "punch_attack_uses",
@@ -353,13 +359,18 @@ local function get_item_specs(item, technical)
 
 	if item.light_source then
 		item_types.node = true
-		table.insert(specs_node, S("emits light: @1", S("yes")))
+		if not technical then
+			table.insert(specs_node, S("emits light: @1", S("yes")))
+		end
+
 		table.insert(specs_node, format_spec(node_types, "light_source", item.light_source, technical))
 	end
 
 	if light_items[id] then
 		item_types.tool = true
-		table.insert(specs_tool, S("emits light: @1", S("yes")))
+		if not technical then
+			table.insert(specs_tool, S("emits light: @1", S("yes")))
+		end
 
 		local radius = light_items[id].radius
 		if radius then
