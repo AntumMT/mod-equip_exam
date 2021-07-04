@@ -429,7 +429,7 @@ local function get_item_specs(item, technical)
 	end
 
 	if #it > 0 then
-		table.insert(specs, S("Type: @1", core.formspec_escape(table.concat(it, ", "))))
+		table.insert(specs, S("Type: @1", table.concat(it, ", ")))
 	end
 
 	if #specs_tool > 0 then
