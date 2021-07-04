@@ -5,7 +5,7 @@ v1.5
 - supports unifieddyes node coloring
 - non-real attributes are hidden in technical view
 - displays ID (technical name) of unknown items
-- added workbench support to check if items are repairable
+- added xdecor & workbench support to check if items are repairable
 
 v1.4
 ----

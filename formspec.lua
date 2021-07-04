@@ -50,6 +50,10 @@ if core.global_exists("workbench") and workbench.repairable then
 	workbench_repairable = function(iname)
 		return workbench:repairable(iname) or false
 	end
+elseif core.global_exists("xdecor") and xdecor.workbench_repairable then
+	workbench_repairable = function(iname)
+		return xdecor:workbench_repairable(iname) or false
+	end
 end
 
 
