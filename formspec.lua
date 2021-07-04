@@ -499,7 +499,7 @@ function equip_exam:get_formspec(item, empty, nmeta)
 	end
 
 	if not specs then
-		specs = core.formspec_escape(S("specs unavailable"))
+		specs = S("ID: @1", item:get_name()) .. "," .. S("specs unavailable")
 	end
 
 	local formspec = "formspec_version[4]"
