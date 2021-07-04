@@ -5,6 +5,6 @@ TODO:
 - show tooltip when text is longer than list width (or show in separate widget)
 - add food attributes
 - separate "emits light" values between nodes, tools, & armor
+- fix extra backslash ("\") caused by formspec escape when separating item types
 - add support mods/items:
 	- xdecor:workbench
-	- workbench

@@ -114,3 +114,4 @@ palette index: @1=
 durability: @1=
 wear: @1=
 emits light: @1=
+workbench repairable: @1=

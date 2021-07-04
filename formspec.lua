@@ -44,6 +44,15 @@ end
 -- END: wlight & wielded_light support
 
 
+-- workbench support
+local workbench_repairable
+if core.global_exists("workbench") and workbench.repairable then
+	workbench_repairable = function(iname)
+		return workbench:repairable(iname) or false
+	end
+end
+
+
 local general_types = {
 	["description"] = "Description",
 	["short_description"] = "Short Description",
@@ -171,7 +180,6 @@ local function format_spec(grp, name, value, technical)
 		nname = name:gsub("_", " "):trim()
 	end
 
-	-- FIXME: name may need formspec_escape as well
 	return S(nname .. ": @1", value)
 end
 
@@ -393,6 +401,11 @@ local function get_item_specs(item, technical)
 				table.insert(specs_node, S("color: @1", color))
 			end
 		end
+	end
+
+	if not technical and workbench_repairable then
+		table.insert(specs_other, format_spec(other_types, "workbench repairable",
+			workbench_repairable(id), false))
 	end
 
 	if name then
