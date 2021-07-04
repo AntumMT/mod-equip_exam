@@ -6,6 +6,7 @@ v1.5
 - non-real attributes are hidden in technical view
 - displays ID (technical name) of unknown items
 - added xdecor & workbench support to check if items are repairable
+- displays source mod
 
 v1.4
 ----
