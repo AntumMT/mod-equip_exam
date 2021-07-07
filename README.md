@@ -27,6 +27,10 @@ Right-click the equipment examiner node & place an item into its inventory slot 
 	- [![workbench](https://img.shields.io/static/v1?label=GitHub&message=workbench&color=%23375a7f&logo=minetest)](https://github.com/AntumMT/mod-workbench)
 	- [![xdecor](https://img.shields.io/static/v1?label=ContentDB&message=xdecor&color=%23375a7f&logo=minetest)](https://content.minetest.net/packages/jp/xdecor/)
 
+#### Other Mod Support:
+
+- [![3d_armor](https://img.shields.io/static/v1?label=ContentDB&message=3d_armor&color=%23375a7f&logo=minetest)](https://content.minetest.net/packages/stu/3d_armor/)
+
 ### Crafting:
 
 <details>
