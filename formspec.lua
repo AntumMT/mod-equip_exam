@@ -3,12 +3,15 @@ local S = core.get_translator(equip_exam.name)
 
 
 -- wielded_light support
-local function get_light_def(id)
-	return
-end
-
+local function get_light_def(id) end
 if core.global_exists("wielded_light") and wielded_light.get_light_def then
 	get_light_def = wielded_light.get_light_def
+end
+
+-- 3d_armor_light support
+local function is_lighted_armor(id) end
+if core.global_exists("armor_light") and armor_light.is_lighted then
+	is_lighted_armor = armor_light.is_lighted
 end
 
 -- workbench support
@@ -346,12 +349,19 @@ local function get_item_specs(item, technical)
 
 	local light_level = get_light_def(id)
 	if light_level and light_level > 0 then
-		item_types.tool = true
-		if not technical then
-			table.insert(specs_tool, S("emits light: @1", S("yes")))
+		local spec_list, type_list = specs_tool, tool_types
+		if is_lighted_armor(id) then
+			item_types.armor = true
+			spec_list, type_list = specs_armor, armor_types
+		else
+			item_types.tool = true
 		end
 
-		table.insert(specs_tool, format_spec(tool_types, "light level", light_level, technical))
+		if not technical then
+			table.insert(spec_list, S("emits light: @1", S("yes")))
+		end
+
+		table.insert(spec_list, format_spec(type_list, "light level", light_level, technical))
 	end
 
 	local colorable = groups.ud_param2_colorable ~= nil
