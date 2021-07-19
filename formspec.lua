@@ -32,15 +32,6 @@ if core.global_exists("wlight") then
 	end
 end
 
-if core.global_exists("wielded_light") then
-	local wielded_light_register_old = wielded_light.register_item_light
-	wielded_light.register_item_light = function(iname, light_level)
-		light_items[iname] = {radius=light_level}
-
-		return wielded_light_register_old(iname, light_level)
-	end
-end
-
 -- END: wlight & wielded_light support
 
 
@@ -77,7 +68,6 @@ local tool_types = {
 	["not_repaired_by_anvil"] = "anvil repair disabled",
 	["_airtanks_uses"] = "uses",
 	["_airtanks_empty"] = "replace empty with",
-	["radius"] = "light radius",
 }
 for k, v in pairs(tool_node_types) do
 	tool_types[k] = v
@@ -378,16 +368,22 @@ local function get_item_specs(item, technical)
 		table.insert(specs_node, format_spec(node_types, "light_source", item.light_source, technical))
 	end
 
-	if light_items[id] then
+	local light_level = wielded_light.get_light_def(id)
+	local emits_light = light_level and light_level > 0
+	if not emits_light then
+		emits_light = light_items[id]
+		if emits_light then
+			light_level = emits_light.radius
+		end
+	end
+
+	if emits_light and light_level then
 		item_types.tool = true
 		if not technical then
 			table.insert(specs_tool, S("emits light: @1", S("yes")))
 		end
 
-		local radius = light_items[id].radius
-		if radius then
-			table.insert(specs_tool, format_spec(tool_types, "light_radius", radius, technical))
-		end
+		table.insert(specs_tool, format_spec(tool_types, "light level", light_level, technical))
 	end
 
 	local colorable = groups.ud_param2_colorable ~= nil

@@ -2,7 +2,9 @@
 v1.6
 ----
 - added nil check when updating formspec
-- updated xdecor API
+- updated for API:
+	- xdecor
+	- wielded_light v2021-07-15
 
 v1.5
 ----
