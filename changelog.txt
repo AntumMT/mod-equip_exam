@@ -2,6 +2,7 @@
 v1.6
 ----
 - added nil check when updating formspec
+- updated xdecor API
 
 v1.5
 ----
