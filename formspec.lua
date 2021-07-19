@@ -34,6 +34,14 @@ end
 
 -- END: wlight & wielded_light support
 
+-- wielded_light support
+local function get_light_def(id)
+	return
+end
+
+if core.global_exists("wielded_light") and wielded_light.get_light_def then
+	get_light_def = wielded_light.get_light_def
+end
 
 -- workbench support
 local workbench_repairable
@@ -368,7 +376,7 @@ local function get_item_specs(item, technical)
 		table.insert(specs_node, format_spec(node_types, "light_source", item.light_source, technical))
 	end
 
-	local light_level = wielded_light.get_light_def(id)
+	local light_level = get_light_def(id)
 	local emits_light = light_level and light_level > 0
 	if not emits_light then
 		emits_light = light_items[id]
