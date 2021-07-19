@@ -1,4 +1,8 @@
 
+v1.6
+----
+- added nil check when updating formspec
+
 v1.5
 ----
 - parses meta information
