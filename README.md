@@ -22,7 +22,6 @@ Right-click the equipment examiner node & place an item into its inventory slot 
 - Optional depends:
 	- [![default](https://img.shields.io/static/v1?label=GitHub&message=default&color=%23375a7f&logo=github)](https://github.com/minetest/minetest_game/tree/master/mods/default) *(required for craft recipe)*
 	- [![basic_materials](https://img.shields.io/static/v1?label=ContentDB&message=basic_materials&color=%23375a7f&logo=minetest)](https://content.minetest.net/packages/VanessaE/basic_materials/)
-	- [![wlight](https://img.shields.io/static/v1?label=ContentDB&message=wlight&color=%23375a7f&logo=minetest)](https://content.minetest.net/packages/AntumDeluge/wlight/)
 	- [![wielded_light](https://img.shields.io/static/v1?label=ContentDB&message=wielded_light&color=%23375a7f&logo=minetest)](https://content.minetest.net/packages/bell07/wielded_light/)
 	- [![workbench](https://img.shields.io/static/v1?label=GitHub&message=workbench&color=%23375a7f&logo=minetest)](https://github.com/AntumMT/mod-workbench)
 	- [![xdecor](https://img.shields.io/static/v1?label=ContentDB&message=xdecor&color=%23375a7f&logo=minetest)](https://content.minetest.net/packages/jp/xdecor/)

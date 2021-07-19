@@ -2,38 +2,6 @@
 local S = core.get_translator(equip_exam.name)
 
 
--- START: wlight & wielded_light support
-
-local light_items = {}
-
-if core.global_exists("wlight") then
-	local wlight_register_item_old = wlight.register_item
-	local wlight_register_armor_old = wlight.register_armor
-
-	wlight.register_item = function(iname, radius)
-		light_items[iname] = {radius=radius}
-
-		return wlight_register_item_old(iname, radius)
-	end
-
-	wlight.register_armor = function(iname, radius, litem)
-		light_items[iname] = {radius=radius}
-
-		return wlight_register_armor_old(iname, radius, litem)
-	end
-
-	-- re-register torch & megatorch
-	if core.registered_items["default:torch"] then
-		wlight.register_item("default:torch")
-	end
-
-	if core.registered_items["wlight:megatorch"] then
-		wlight.register_item("wlight:megatorch", 10)
-	end
-end
-
--- END: wlight & wielded_light support
-
 -- wielded_light support
 local function get_light_def(id)
 	return
@@ -377,15 +345,7 @@ local function get_item_specs(item, technical)
 	end
 
 	local light_level = get_light_def(id)
-	local emits_light = light_level and light_level > 0
-	if not emits_light then
-		emits_light = light_items[id]
-		if emits_light then
-			light_level = emits_light.radius
-		end
-	end
-
-	if emits_light and light_level then
+	if light_level and light_level > 0 then
 		item_types.tool = true
 		if not technical then
 			table.insert(specs_tool, S("emits light: @1", S("yes")))
