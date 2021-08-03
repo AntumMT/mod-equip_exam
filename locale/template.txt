@@ -1,4 +1,6 @@
-## Translated by:
+# textdomain:equip_exam
+
+# Translators:
 
 # Any attribute keys not listed here can be added manually. Just replace
 # underscores ("_") with spaces (" ") and append it with ": @1" and it

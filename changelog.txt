@@ -1,4 +1,8 @@
 
+v1.7
+----
+- added missing "textdomain" line in localization template
+
 v1.6
 ----
 - added nil check when updating formspec
