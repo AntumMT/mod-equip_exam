@@ -103,6 +103,7 @@ weapon: @1=
 heavy: @1=
 speed interval: @1=
 range: @1=
+texture: @1=
 texture alpha mode: @1=
 stackable: @1=
 stack max: @1=
@@ -115,4 +116,43 @@ palette index: @1=
 durability: @1=
 wear: @1=
 emits light: @1=
+backface culling: @1=
+mesh: @1=
+paramtype: @1=
+paramtype2: @1=
+on rotate: @1=
+infotext: @1=
+liquid viscosity: @1=
+drowning: @1=
+liquid alternative flowing: @1=
+liquid range: @1=
+liquid renewable: @1=
+liquid alternative source: @1=
+waving: @1=
+wallmounted: @1=
+legacy wallmounted: @1=
+
+# xdecor / workbench
 workbench repairable: @1=
+
+# 3d_armor
+preview: @1=
+subtype: @1=
+
+# shields
+reciprocate damage: @1=
+
+# throwing
+target: @1=
+on hit sound: @1=
+allow protected: @1=
+mass: @1=
+strength: @1=
+
+# sling:sling
+cooldown: @1=
+delay: @1=
+sound: @1=
+
+# technic
+wear represents: @1=

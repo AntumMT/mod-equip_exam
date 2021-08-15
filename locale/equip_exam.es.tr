@@ -87,6 +87,7 @@ flammable: @1=inflamable: @1
 color: @1=
 speed interval: @1=intervalo velocidad: @1
 range: @1=alcance: @1
+texture: @1=textura: @1
 texture alpha mode: @1=modo textura alfa: @1
 stackable: @1=apilable: @1
 stack max: @1=apila max: @1
@@ -97,7 +98,46 @@ palette index: @1=índice de paleta: @1
 durability: @1=durabilidad: @1
 wear: @1=deterioro: @1
 emits light: @1=emite luz: @1
+backface culling: @1=
+mesh: @1=
+paramtype: @1=
+paramtype2: @1=
+on rotate: @1=al girar: @1
+infotext: @1=texto informativo: @1
+liquid viscosity: @1=viscosidad líquido: @1
+drowning: @1=ahogo: @1
+liquid alternative flowing: @1=líquido fluente alternativo: @1
+liquid range: @1=alcance líquido: @1
+liquid renewable: @1=líquido renovable: @1
+liquid alternative source: @1=fuente líquido alternativa: @1
+waving: @1=ondulación: @1
+wallmounted: @1=montado en pared: @1
+legacy wallmounted: @1=legado montado en pared: @1
+
+# xdecor / workbench
 workbench repairable: @1=reparo por banco de trabajo: @1
+
+# 3d_armor
+preview: @1=previsio: @1
+subtype: @1=subtipo: @1
+
+# shields
+reciprocate damage: @1=reciproca daño: @1
+
+# throwing
+target: @1=objetivo: @1
+on hit sound: @1=sonido al golpear: @1
+allow protected: @1=permitir protegido: @1
+mass: @1=masa: @1
+strength: @1=fuerza: @1
+
+# sling:sling
+cooldown: @1=
+delay: @1=demora: @1
+sound: @1=sonido: @1
+
+# technic
+wear represents: @1=
 
 # unverified
 replace empty with: @1=vacío reemplazado con: @1
