@@ -2,6 +2,7 @@
 v1.7
 ----
 - added missing "textdomain" line in localization template
+- added Spanish translation
 - indent groups & add header
 
 v1.6
