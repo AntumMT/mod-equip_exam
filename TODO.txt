@@ -6,3 +6,5 @@ TODO:
 - add food attributes
 - separate "emits light" values between nodes, tools, & armor
 - add Spanish translation
+- found errors when examining:
+	- default:ice: Ignoring out-of-bounds argument escape sequence in translation
