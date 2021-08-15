@@ -506,7 +506,7 @@ function equip_exam:get_formspec(item, empty, nmeta)
 	local formspec = "formspec_version[4]"
 		.. "size[13,9]"
 		.. "list[context;input;1,1;1,1;0]"
-		.. "checkbox[0.25,2.55;techname;" .. core.formspec_escape(S("Technical Names"):gsub(" ", "\n"))
+		.. "checkbox[0.25,2.55;techname;" .. core.formspec_escape(S("Technical@nNames"))
 			.. ";" .. tostring(show_technical) .. "]"
 		.. "button_exit[0.25,3.1;2.5,0.8;close;" .. core.formspec_escape(S("Close")) .. "]"
 		.. "label[3,0.7;" .. core.formspec_escape(S("Specs:")) .. "]"
