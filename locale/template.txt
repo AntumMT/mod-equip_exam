@@ -90,6 +90,7 @@ punch operable: @1=
 # other & meta
 Other:=
 Meta:=
+groups:=
 inventory image: @1=
 wield image: @1=
 flammable: @1=

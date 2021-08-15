@@ -261,6 +261,7 @@ local function get_item_specs(item, technical)
 		spec_group = specs_node
 	end
 
+	local added_misc_groups = false
 	for k, v in pairs(groups) do
 		if not is_excluded(k) then
 			if type_group[k] then
@@ -280,7 +281,12 @@ local function get_item_specs(item, technical)
 				table.insert(specs_entity, format_spec(entity_types, k, v, technical))
 				item_types.entity = true
 			else
-				table.insert(specs_other, format_spec(other_types, k, v, technical))
+				if not added_misc_groups then
+					table.insert(specs_other, S("groups:"))
+					added_misc_groups = true
+				end
+
+				table.insert(specs_other, "  " .. format_spec(other_types, k, v, true))
 			end
 		end
 	end
