@@ -32,7 +32,7 @@ local node_def = {
 		"equip_exam_examiner.png",
 	},
 	groups = {oddly_breakable_by_hand=1,},
-	is_gound_content = false,
+	is_ground_content = false,
 	stack_max = 1,
 	paramtype2 = "facedir",
 	on_construct = function(pos)
