@@ -29,7 +29,6 @@ end
 
 local general_types = {
 	["description"] = "Description",
-	["short_description"] = "Short Description",
 	["uses"] = "durability",
 }
 
